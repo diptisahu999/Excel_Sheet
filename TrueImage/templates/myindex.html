@@ -1,0 +1,290 @@
+{% load static %}
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="{% static 'myindex/main.css' %}" rel="stylesheet" />
+    <meta charset="UTF-8" />
+</head>
+<body>
+<noscript>
+    <div id="noscript">
+        Please, enable javascript in your browser
+    </div>
+</noscript>
+<style>
+    label{
+        color: gold;
+
+    }
+    h1{
+        color: gold;
+    }
+</style>
+
+<!-- <select id="area-dropdown">
+    <option value="" disabled selected>Select Area</option>
+    {% for instance in subarea_instance %}
+        {% if instance.off_image_path.url and instance.on_image_path.url %}
+            <option value="{{ instance.id }}" data-image="{{ instance.off_image_path.url }}" on_img="{{ instance.on_image_path.url }}">{{ instance.sub_area_name }}</option>
+        {% else %}
+            <option value="{{ instance.id }}">{{ instance.sub_area_name }}</option>
+        {% endif %}
+    {% endfor %}
+</select> -->
+<div id="wrapper">
+    
+    <header id="header">
+        
+        <div id="drop-down">
+            <h1>TrueImage Areas Configurations</h1>
+            <div style="display: flex; left: auto;">
+                
+            </div>
+            <label for="area-dropdown">Select Area:</label>
+            <select id="area-dropdown">
+                <option value="" disabled selected>Select Area</option>
+                {% for instance in subarea_instance %}
+                    {% if instance.off_image_path.url and instance.on_image_path.url %}
+                        <option value="{{ instance.id }}" data-image="{{ instance.off_image_path.url }}" on_img="{{ instance.on_image_path.url }}">{{ instance.sub_area_name }}</option>
+                    {% else %}
+                        <option value="{{ instance.id }}">{{ instance.sub_area_name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            
+            <label for="area-dropdown">Select Device:</label>
+            <select id="device-dropdown">
+                <option value="" disabled selected>Select Device</option>
+                <!-- {% for instance in devices_instance %}
+                    <option value="{{ instance.id }}">{{ instance.device_name }}</option>
+                {% endfor %} -->
+            </select>
+
+        </div>
+        
+        <nav id="nav" class="clearfix">
+            <ul>
+                <li id="save"><a href="#">save</a></li>
+                <li id="load" style="display: none;"><a href="#">load</a></li>
+                <li id="from_html"><a href="#">from html</a></li>
+                <li id="rectangle"><a href="#">rectangle</a></li>
+                <li id="circle"><a href="#">circle</a></li>
+                <li id="polygon"><a href="#">polygon</a></li>
+                <li id="edit"><a href="#">edit</a></li>
+                <li id="to_html"  style="display: none;"><a href="#">to html</a></li>
+                <li id="preview"  style="display: none;"><a href="#">preview</a></li>
+                <li id="clear"><a href="#">clear</a></li>
+                <li id="new_image" style="display: none;"><a href="#">new image</a></li>
+                <li id="show_help" style="display: none;"><a href="#">?</a></li>
+              
+               
+            </ul>
+        </nav>
+        <div id="coords"></div>
+        <div id="debug"></div>
+    </header>
+    <div id="image_wrapper">
+        <div id="image" style="margin: 92px;">
+            <img src="" alt="#" id="img" usemap="#map" />
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" id="svg" width="1300" height="867"></svg>
+            <!-- <map name="map"></map> -->
+        </div>
+    </div>
+</div>
+
+<!-- For html image map code -->
+<div id="code">
+    <span class="close_button" title="close"></span>
+    <div id="code_content"></div>
+</div>
+
+<!-- Edit details block -->
+<form id="edit_details">
+    <h5>Attributes</h5>
+    <span class="close_button" title="close"></span>
+    <p>
+        <label for="href_attr">href</label>
+        <input type="text" id="href_attr" />
+    </p>
+    <p>
+        <label for="alt_attr">alt</label>
+        <input type="text" id="alt_attr" />
+    </p>
+    <p>
+        <label for="title_attr">title</label>
+        <input type="text" id="title_attr" />
+    </p>
+    <button id="save_details">Save</button>
+</form>
+
+<!-- From html block -->
+<div id="from_html_wrapper">
+    <form id="from_html_form">
+        <h5>Loading areas</h5>
+        <span class="close_button" title="close"></span>
+        <p>
+            <label for="code_input">Enter your html code:</label>
+            <textarea id="code_input"></textarea>
+        </p>
+        <button id="load_code_button">Load</button>
+    </form>
+</div>
+  
+<!-- Get image form -->
+<div id="get_image_wrapper">
+    <div id="get_image">
+      <span title="close" class="close_button"></span>
+      <div id="loading">Loading</div>
+      <div id="file_reader_support">
+        <label>Drag an image</label>
+        <div id="dropzone" draggable="true">
+          <span class="clear_button" title="clear">x</span>
+          <img src="" alt="preview" id="sm_img" />
+        </div>
+        <b>or</b>
+      </div>
+      <label for="url">type a url</label>
+      <span id="url_wrapper">
+        <span class="clear_button" title="clear">x</span>
+        <input type="text" id="url" />
+      </span>
+      <button id="button">OK</button>
+    </div>
+  </div>
+<!-- Help block -->
+<div id="overlay"></div>
+<div id="help">
+    <span class="close_button" title="close"></span>
+    <div class="txt">
+        <section>
+            <h2>Main</h2>
+            <p><span class="key">F5</span> &mdash; reload the page and display the form for loading image again</p>
+            <p><span class="key">S</span> &mdash; save map params in localStorage</p>
+        </section>
+        <section>
+            <h2>Drawing mode (rectangle / circle / polygon)</h2>
+            <p><span class="key">ENTER</span> &mdash; stop polygon drawing (or click on first helper)</p>
+            <p><span class="key">ESC</span> &mdash; cancel drawing of a new area</p>
+            <p><span class="key">SHIFT</span> &mdash; square drawing in case of a rectangle and right angle drawing in case of a polygon</p>
+        </section>
+        <section>
+            <h2>Editing mode</h2>
+            <p><span class="key">DELETE</span> &mdash; remove a selected area</p>
+            <p><span class="key">ESC</span> &mdash; cancel editing of a selected area</p>
+            <p><span class="key">SHIFT</span> &mdash; edit and save proportions for rectangle</p>
+            <p><span class="key">I</span> &mdash; edit attributes of a selected area (or dblclick on an area)</p>
+            <p><span class="key">CTRL</span> + <span class="key">C</span> &mdash; a copy of the selected area</p>
+            <p><span class="key">&uarr;</span> &mdash; move a selected area up</p>
+            <p><span class="key">&darr;</span> &mdash; move a selected area down</p>
+            <p><span class="key">&larr;</span> &mdash; move a selected area to the left</p>
+            <p><span class="key">&rarr;</span> &mdash; move a selected area to the right</p>
+        </section>
+    </div>
+</div>
+<script>
+
+    const dropdown = document.getElementById('area-dropdown');
+    const image = document.getElementById('sm_img');
+    const urlInput = document.getElementById('url');
+  
+    const dropdownChangeListener = function() {
+    jQuery('input#url').focus();
+
+      const selectedOption = dropdown.options[dropdown.selectedIndex];
+      const imageUrl = selectedOption.getAttribute('data-image');
+      var OnimageUrl = selectedOption.getAttribute('on_img');
+      image.src = imageUrl;
+      urlInput.value = image.src;
+    //   console.log(OnimageUrl)
+      window.OnimageUrl = OnimageUrl
+      jQuery('#button').trigger('click');
+      //onButtonClick();
+     
+    
+    };
+  
+    dropdown.addEventListener('change', dropdownChangeListener);
+
+
+    const areaDropdown = document.getElementById('area-dropdown');
+    const deviceDropdown = document.getElementById('device-dropdown');
+
+    // Add an event listener to the area dropdown
+    areaDropdown.addEventListener('change', function() {
+        const selectedSubareaId = areaDropdown.value;
+
+        // Send a request to retrieve the device list based on the selected subarea ID
+        // Replace the URL with your backend API endpoint that handles the request
+        fetch(`/manage_bms_subarea/${selectedSubareaId}`)
+    .then(response => response.json())
+    .then(data => {
+        var n  = 0
+        window.ImageID = n;
+        console.log(data.response.devices_details,"here i m working");
+        console.log(ImageID);
+
+        // Clear the current options in the device dropdown
+        deviceDropdown.innerHTML = '<option value="" disabled selected>Select Device</option>';
+
+        // Add the retrieved device list options to the device dropdown
+        data.response.devices_details.forEach((device, index) => {
+            const option = document.createElement('option');
+            option.setAttribute('elementId',(index + 1));
+            option.value = device.id;
+            option.textContent = device.device_name;
+            deviceDropdown.appendChild(option);
+        });
+        n = n + 1;
+    })
+    .catch(error => {
+        console.log('Error:', error);
+    });
+    });
+
+
+     
+  </script>
+  
+  
+<script type="text/javascript" src="{% static 'myindex/summerHTMLImageMapCreator.js' %}"></script>
+</body>
+</html>
+<script>
+    var removedElements = null; 
+    document.getElementById('get_image_wrapper').style.display = "none";
+    var selectElement = document.getElementById("device-dropdown");
+    var selectedOption = dropdown.options[dropdown.selectedIndex];
+    var OnimageUrl = selectedOption.getAttribute('on_img');
+        // window.OnimageUrl =  'http://'+window.location.hostname+':'+ window.location.port+OnimageUrl;
+
+        selectElement.addEventListener("change", function() {
+            //  
+            var selectedValue = selectElement.value;
+            window.selectedValue = selectedValue;
+            var selectedOption = deviceDropdown.options[deviceDropdown.selectedIndex];
+            var selectedElementId = selectedOption.getAttribute('elementId');
+            window.selectedElementId = selectedElementId;
+          
+            // var selectedOption = selectElement.querySelector('option[value="' + selectedValue + '"]');
+            // selectedOption.disabled = true;
+            // setIsDraw(selectedValue);
+
+            jQuery('#nav li').on('click', function() {
+            if (!removedElements) {
+                // Remove all other buttons and store them in the variable
+                removedElements = jQuery('#nav li').not('#save').not('#edit').remove();
+            } else {
+                // Append the removed elements back to the navigation menu
+                jQuery('#nav ul').append(removedElements);
+
+                // Reset the variable to null
+                removedElements = null;
+            }
+
+            // Rest of your click event code...
+            });
+
+            });
+
+
+    </script>

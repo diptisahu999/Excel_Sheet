@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>My Django App</title>
+</head>
+<body>
+	<form action="" method="POST">
+        {% csrf_token %}
+        <label for="input-text">Enter text:</label>
+        <input type="text" id="input-text" name="input-text">
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

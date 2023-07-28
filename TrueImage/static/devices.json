@@ -1,0 +1,170 @@
+{
+    "devices": [
+        {
+            "record_id": 1,
+            "device_name": "Main Hall Light",
+            "device_type": "RL",
+            "app_type": "L",
+            "device_id": "62",
+            "channel_id": "1",
+            "device_status": "true"
+        },
+        {
+            "record_id": 2,
+            "device_name": "Bedroom Light First",
+            "device_type": "RL",
+            "app_type": "L",
+            "device_id": "62",
+            "channel_id": "2",
+            "device_status": "true"
+        },
+        {
+            "record_id": 3,
+            "device_name": "Bedroom Light Second",
+            "device_type": "RL",
+            "app_type": "L",
+            "device_id": "62",
+            "channel_id": "3",
+            "device_status": "true"
+        },
+        {
+            "record_id": 4,
+            "device_name": "Main Hall AC",
+            "device_type": "AC",
+            "app_type": "AC",
+            "device_id": "L1",
+            "channel_id": "004",
+            "temp": "",
+            "device_status": "true"
+        },
+        {
+            "record_id": 5,
+            "device_name": "Bedroom AC",
+            "device_type": "AC",
+            "app_type": "AC",
+            "device_id": "L1",
+            "channel_id": "005",
+            "device_status": "true"
+        },
+        {
+            "record_id": 6,
+            "device_name": "Hall Curtain",
+            "device_type": "TV",
+            "app_type": "TV",
+            "device_id": "192.168.1.13",
+            "channel_id": null,
+            "device_status": "true"
+        },
+        {
+            "record_id": 7,
+            "device_name": "Bedroom Curtain",
+            "device_type": "TV",
+            "app_type": "TV",
+            "device_id": "192.168.1.14",
+            "channel_id": null,
+            "device_status": "false"
+        },
+        {
+            "record_id": 8,
+            "device_name": "Bedroom Curtain",
+            "device_type": "AVR",
+            "app_type": "AVR",
+            "device_id": "192.168.1.15",
+            "channel_id": null,
+            "device_status": "true"
+        },
+        {
+            "record_id": 9,
+            "device_name": "Bedroom Curtain",
+            "device_type": "RL",
+            "app_type": "S",
+            "device_id": "63",
+            "channel_id": "10",
+            "device_status": "true"
+        },
+        {
+            "record_id": 10,
+            "device_name": "Bedroom Curtain",
+            "device_type": "RL",
+            "app_type": "S",
+            "device_id": "62",
+            "channel_id": "11",
+            "device_status": "false"
+        },
+        {
+            "record_id": 11,
+            "device_name": "Bedroom Curtain",
+            "device_type": "RL",
+            "app_type": "CM",
+            "device_id": "63",
+            "channel_id": "12",
+            "device_status": "false"
+        },
+        {
+            "record_id": 12,
+            "device_name": "Bedroom Curtain",
+            "device_type": "RL",
+            "app_type": "CM",
+            "device_id": "62",
+            "channel_id": "12",
+            "device_status": "true"
+        }
+    ],
+    "areas": [
+        {
+            "id": 1,
+            "name": "Floor 1",
+            "departments": [
+                {
+                    "id": 1,
+                    "name": "common area",
+                    "sub_area": [
+                        {
+                            "id": 1,
+                            "name": "walking passage",
+                            "area_devices": "1,4,6",
+                            "image_path": "image/walking_passage.jpg"
+                        },
+                        {
+                            "id": 2,
+                            "name": "lift passage",
+                            "area_devices": "7,3,5"
+                        },
+                        {
+                            "id": 3,
+                            "name": "pantry passage",
+                            "area_devices": "1,4,6"
+                        },
+                        {
+                            "id": 4,
+                            "name": "electrical room",
+                            "area_devices": "1,4,6"
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "name": "haz waste - open",
+                    "sub_area": [
+                        {
+                            "id": 1,
+                            "name": "VP-2 Haz Waste (umesh shroff)"
+                        },
+                        {
+                            "id": 2,
+                            "name": "President Haz Waste (umesh shroff)"
+                        },
+                        {
+                            "id": 3,
+                            "name": "CEO-1 Haz Waste (Keshav Kaka)"
+                        },
+                        {
+                            "id": 4,
+                            "name": "CEO-2 Haz Waste ( D B )"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

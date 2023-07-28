@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #image-container {
+            position: relative;
+        }
+
+        .shape {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .circle {
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .rectangle {
+            background-color: rgba(0, 0, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img src="http://localhost:8090//SubAreaOffImage/46_off_Lounge_9jorek_HzMQ0UI.jpg" alt="Your Image">
+        <div class="shape circle" style="top: 100px; left: 200px; width: 100px; height: 100px;"></div>
+        <div class="shape rectangle" style="top: 300px; left: 400px; width: 150px; height: 100px;"></div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            var shapes = document.getElementsByClassName('shape');
+            for (var i = 0; i < shapes.length; i++) {
+                shapes[i].addEventListener('click', handleShapeClick);
+            }
+        });
+
+        function handleShapeClick(event) {
+            var shapeType = this.classList.contains('circle') ? 'circle' : 'rectangle';
+            var shapeIndex = Array.from(this.parentNode.getElementsByClassName('shape')).indexOf(this);
+            var x = event.clientX - this.parentNode.offsetLeft;
+            var y = event.clientY - this.parentNode.offsetTop;
+            console.log('Clicked ' + shapeType + ' shape at index ' + shapeIndex);
+            console.log('Coordinates: x=' + x + ', y=' + y);
+        }
+    </script>
+</body>
+</html>

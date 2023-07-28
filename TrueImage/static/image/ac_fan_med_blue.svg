@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20.518" height="17.702" viewBox="0 0 20.518 17.702">
+  <g id="Group_3914" data-name="Group 3914" transform="translate(-347.141 -866.748)">
+    <g id="Group_3510" data-name="Group 3510" transform="translate(347.141 866.748)">
+      <g id="speedometer" transform="translate(0 0)">
+        <path id="Path_91873" data-name="Path 91873" d="M91.9,38.948V35.154a10.189,10.189,0,0,0-6.225,2.579l2.683,2.683A6.43,6.43,0,0,1,91.9,38.948Z" transform="translate(-82.24 -35.154)" fill="#413A88"/>
+        <path id="Path_91874" data-name="Path 91874" d="M5.276,123.4l-2.682-2.683a10.188,10.188,0,0,0-2.583,6.225H3.805A6.43,6.43,0,0,1,5.276,123.4Z" transform="translate(-0.011 -117.293)" fill="#413A88"/>
+        <path id="Path_91875" data-name="Path 91875" d="M382.082,126.947h3.794a10.188,10.188,0,0,0-2.583-6.225l-2.682,2.683A6.43,6.43,0,0,1,382.082,126.947Z" transform="translate(-365.358 -117.293)" fill="#413A88"/>
+        <path id="Path_91876" data-name="Path 91876" d="M368.184,306.055a6.453,6.453,0,0,1-1.874,3.993.6.6,0,0,0,0,.852l1.824,1.824a.6.6,0,0,0,.852,0,10.2,10.2,0,0,0,2.994-6.668Z" transform="translate(-351.461 -295.198)" fill="#413A88"/>
+        <path id="Path_91878" data-name="Path 91878" d="M271,35.154v3.794a6.43,6.43,0,0,1,3.542,1.468l2.682-2.683A10.189,10.189,0,0,0,271,35.154Z" transform="translate(-260.14 -35.154)" fill="#413A88"/>
+        <path id="Path_91880" data-name="Path 91880" d="M369.93,306.055a6.453,6.453,0,0,0,1.874,3.993.6.6,0,0,1,0,.852l-1.824,1.824a.6.6,0,0,1-.852,0,10.2,10.2,0,0,1-2.994-6.669Z" transform="translate(-366.134 -295.198)" fill="#413A88"/>
+      </g>
+      <ellipse id="Ellipse_71" data-name="Ellipse 71" cx="1.39" cy="1.159" rx="1.39" ry="1.159" transform="translate(8.723 2.501)" fill="#fff"/>
+    </g>
+    <path id="Path_92075" data-name="Path 92075" d="M5.247.678A84.741,84.741,0,0,0,.115,8.07.738.738,0,0,0,1.134,9.089,84.748,84.748,0,0,0,8.526,3.958,2.319,2.319,0,1,0,5.247.678Z" transform="translate(363.277 877.039) rotate(139)" fill="#413A88"/>
+  </g>
+</svg>

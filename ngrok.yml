@@ -1,0 +1,9 @@
+version: "2"
+authtoken: 2QGxWUV8uuoznHuwLl6lXtcy42g_5b9K9g2iWHkVdxt5BXx9L
+tunnels:
+  first:
+    addr: 8090
+    proto: http    
+  second:
+    addr: 8090
+    proto: tcp

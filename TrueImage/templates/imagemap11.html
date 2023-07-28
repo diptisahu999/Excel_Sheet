@@ -1,0 +1,351 @@
+{% load static %}
+<html>
+<head>
+<title>Image Map</title>
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</link>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.3/css/bootstrap-select.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.css" rel="stylesheet">
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.13.18/jquery.timepicker.min.css" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css"> -->
+<link rel="stylesheet" href="{% static 'cnd/wickedpicker.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/common.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link href="{% static 'css/main.css' %}" type="text/css" rel="stylesheet" />
+<style>
+    .card-header {
+        float: left;
+        height: 30px;
+        width: 25px;
+        padding: 0;
+    }
+    h1 {
+  text-align: center;
+}
+
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 60%;
+  /* depends on svg ratio, for my zebra height/width = 1.2 so padding-bottom = 50% * 1.2 = 60% */
+  vertical-align: middle;
+  /* top | middle | bottom ... do what you want */
+}
+
+.my-svg {
+  /* svg into : object, img or inline */
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* only required for <img /> */
+  z-index: 0;
+}
+
+svg {
+  border: solid 1px rgba(221, 61, 16, 0.71);
+}
+
+.rectangle {
+  fill: lightblue;
+  stroke: blue;
+  stroke-width: 2px;
+  fill-opacity: 0.5;
+}
+
+.rectangle-bind {
+  fill: none;
+  stroke: #081c4e;
+  stroke-width: 1px;
+  stroke-dasharray: 5;
+}
+
+circle {
+  fill: lightgreen;
+  stroke: green;
+  stroke-width: 2px;
+  fill-opacity: 0.5;
+}
+
+.rect-active {
+  fill: #1578db;
+}
+
+.pointC-active {
+  fill: #FF8F00;
+}
+
+.circle-active {
+  fill: #4CAF50;
+}
+
+path {
+  fill: #ffb7b3;
+  stroke: #ff4736;
+  stroke-width: 5px;
+}
+
+polygon {
+  fill: #b6eeff;
+  fill-opacity: 0.5;
+  stroke: #0067ff;
+  stroke-width: 2px;
+}
+
+line {
+  fill: none;
+  stroke: #cd08ff;
+  stroke-width: 2px;
+}
+
+polyline {
+  fill: none;
+  stroke: #563aff;
+  stroke-width: 2px;
+}
+
+circle.handle {
+  fill: yellow;
+  stroke: #cb9c0f;
+  stroke-width: 2px;
+  cursor: pointer;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+
+</head>
+<body>
+<!-- <header id="header"> -->
+<nav id="nav" class="clearfix">
+    <ul>
+        <!-- <li id="load"><a href="#"><b>load</b></a></li> -->
+        <!-- <li id="from_html" class="ctrl"><a href="#" class="myClass disabled"><b>From html</b></a></li> -->
+        <!-- <li id="rectangle" class="ctrl"><a href="#" class="myClass disabled"><b>Rectangle</b></a></li> -->
+        <!-- <li id="circle" class="ctrl"><a href="#" class="myClass disabled"><b>Circle</b></a></li>-->
+        <!-- <li id="polygon" class="ctrl"><a href="#" class="myClass disabled"><b>Polygon</b></a></li>  -->
+        <!-- <li id="edit" class="ctrl"><a href="#" class="myClass disabled"><b>Edit</b></a></li> -->
+        <!-- <li id="to_html" class="ctrl"><a href="#" class="myClass disabled"><b>To html</b></a></li> -->
+        <!-- <li id="preview" class="ctrl"><a href="#" class="myClass disabled"><b>Preview</b></a></li> -->
+        <!-- <li id="clear" class="ctrl"><a href="#" class=""><b>Clear</b></a></li> -->
+        <!-- <li id="new_image" class="ctrl"><a href="#" class=""><b>New image</b></a></li> -->
+        <!-- <li id="show_help" class="ctrl"><a href="#" class=""><b>?</b></a></li>                 -->
+        <!-- <button id="button"><b>Start</b></button> -->
+    </ul>
+</nav>
+<div id="coords"></div>
+<div id="debug"></div>
+<!-- </header> -->
+
+<div id="image_wrapper">
+    <div class="row">      
+        <div class="col-2" style="display: none;">
+            <p id="t_floor">Select Floor</p>
+            <select name="floor" id="floor">
+                <option value="" selected disabled>Select Floor</option>
+            </select>
+        </div>
+        <div class="col-2" style="display: none;">
+            <p id="t_dept">Select Departments</p>
+            <select name="departments" id="departments">
+                <option value="" selected disabled>Select Departments</option>
+            </select>
+        </div>  
+        <div class="col-2" id="ares_col">
+            <p id="t_sub">Select Area</p>
+            <select name="subarea" id="subarea">
+                <option value="" selected disabled>Select Area</option>
+            </select>
+        </div>
+        <div class="col-2" id="device_col" style="display: none;">
+            <p id="t_device">Select Devices</p>
+            <select name="devicelist" id="devicelist">
+                <option value="" selected disabled>Select Device</option>
+            </select>
+        </div>
+        <div class="col-2" id="shape_col" style="display: none;">
+            <p id="t_shape">Select Shape Type</p>
+            <select name="shapeType" class="ctrl" id="shapeType">
+                <option value="" selected disabled>Select Shape Type</option>
+                <option value="rectangle" >Rectangle</option>
+                <option value="polygon" >Polygon</option>
+            </select>
+        </div>
+        <div class="col-2" id="cancel_col" style="display: none;">
+            <button id="device_cancel" >Cancel</button>
+        </div> 
+        <div class="col-2" id="add_col">
+            <input type="submit" value="Add" id="add_area">
+        </div>
+        <div class="col-2" id="save_col" style="display: none;">
+            <button id="save">Save</button>
+        </div>   
+           
+    </div>
+    <div class="row main-image">
+        <div class="col-1 icon-class">           
+            <div id="icons">
+            </div>
+            <!-- <button id="show_areas">Show Areas</button> -->
+        </div>
+        <!-- <div id="image"> -->
+        <div class="col-8">
+        <div id="image" style="display: block; width: 1080px; height: 608px;" class="draw">            
+            <img src="" alt="#" id="img" usemap="#map">
+            <svg xmlns="http://www.w3.org/2000/svg" class="svg-window" version="1.2" baseProfile="tiny" id="svg" width="1080" height="608"
+                style="display: block;"></svg>
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- For html image map code -->
+<div id="code">
+    <span class="close_button" title="close"></span>
+    <div id="code_content"></div>
+</div>
+
+<!-- Edit details block -->
+<form id="edit_details" style="display: none !important;">
+    <h5>Attributes</h5>
+    <span class="close_button" title="close"></span>
+    <p>
+        <label for="href_attr">href</label>
+        <input type="text" id="href_attr" />
+    </p>
+    <p>
+        <label for="alt_attr">alt</label>
+        <input type="text" id="alt_attr" />
+    </p>
+    <p>
+        <label for="title_attr">title</label>
+        <input type="text" id="title_attr" />
+    </p>
+    <button id="save_details">Save</button>
+</form>
+
+<!-- From html block -->
+<div id="from_html_wrapper">
+    <form id="from_html_form">
+        <h5>Loading areas</h5>
+        <span class="close_button" title="close"></span>
+        <p>
+            <label for="code_input">Enter your html code:</label>
+            <textarea id="code_input"></textarea>
+        </p>
+        <button id="load_code_button">Load</button>
+    </form>
+</div>
+
+<!-- Get image form -->
+<div id="get_image_wrapper">
+    <div id="get_image" style="display: none;">
+        <span title="close" class="close_button"></span>
+        <div id="loading">Loading</div>
+        <div id="file_reader_support">
+            <label>Drag an image</label>
+            <div id="dropzone">
+                <span class="clear_button" title="clear">x</span>
+                <img src="" alt="preview" id="sm_img" />
+            </div>
+            <b>or</b>
+        </div>
+        <label for="url">type a url</label>
+        <span id="url_wrapper">
+            <span class="clear_button" title="clear">x</span>
+            <input type="text" id="url" />
+        </span>
+
+    </div>
+</div>
+
+<!-- Help block -->
+<div id="overlay"></div>
+<div id="help">
+    <span class="close_button" title="close"></span>
+    <div class="txt">
+        <section>
+            <h2>Main</h2>
+            <p><span class="key">F5</span> &mdash; reload the page and display the form for loading image again</p>
+            <!-- <p><span class="key">S</span> &mdash; save map params in localStorage</p> -->
+        </section>
+        <section>
+            <h2>Drawing mode (rectangle / circle / polygon)</h2>
+            <!-- <p><span class="key">ENTER</span> &mdash; stop polygon drawing (or click on first helper)</p> -->
+            <p><span class="key">ESC</span> &mdash; cancel drawing of a new area</p>
+            <p><span class="key">SHIFT</span> &mdash; square drawing in case of a rectangle and right angle drawing
+                in case of a polygon</p>
+        </section>
+        <section>
+            <h2>Editing mode</h2>
+            <p><span class="key">DELETE</span> &mdash; remove a selected area</p>
+            <p><span class="key">ESC</span> &mdash; cancel editing of a selected area</p>
+            <p><span class="key">SHIFT</span> &mdash; edit and save proportions for rectangle</p>
+            <!-- <p><span class="key">I</span> &mdash; edit attributes of a selected area (or dblclick on an area)</p> -->
+            <!-- <p><span class="key">CTRL</span> + <span class="key">C</span> &mdash; a copy of the selected area</p> -->
+            <p><span class="key">&uarr;</span> &mdash; move a selected area up</p>
+            <p><span class="key">&darr;</span> &mdash; move a selected area down</p>
+            <p><span class="key">&larr;</span> &mdash; move a selected area to the left</p>
+            <p><span class="key">&rarr;</span> &mdash; move a selected area to the right</p>
+        </section>
+    </div>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/utils/Draggable.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.3/js/bootstrap-select.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/js/mdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script> -->
+<!-- or -->
+    <script src="https://cdn.jsdelivr.net/npm/interactjs@latest/dist/interact.min.js"></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="{% static 'js/summerHTMLImageMapCreator.js' %}"></script>
+<script src="{% static 'js/dragdrop.js' %}"></script>
+
+<script>
+    jQuery(document).ready(function () {
+        if(jQuery("#left_menu").hasClass("open-nav")){
+                    jQuery('ul a').removeClass("left_partial");
+                    jQuery('ul a').addClass("left_full");
+                }else{
+                    jQuery('ul a').removeClass("left_full");
+                    jQuery('ul a').addClass("left_partial");
+                }
+        var current = window.location.pathname;
+        // console.log(current);
+        $('ul a').removeClass("active");
+        jQuery('ul a').each(function () {
+            var $this = $(this);
+            // $('ul a').removeClass("active");
+            // if the current path is like this link, make it active
+            if (current == "/") {
+                jQuery("#main_page").addClass('active');
+            } else if ($this.attr('href').indexOf(current) !== -1) {
+                $this.addClass('active');
+            }
+        });
+    });
+</script>
+</html>
